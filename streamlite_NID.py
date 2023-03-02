@@ -1,17 +1,21 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import ast
 
 
 def random_nid(taxon_list):
         return np.random.choice(taxon_list)
 
 # load species.csv
-df = pd.read_csv(r'species.csv')
+df = pd.read_csv(r'species_w2v.csv')
 #print(df)
-taxon_rare = df[df["count"] < 10000]
+
+# warning : Some taxa are over reprensented, hence the artificial threshold here
+taxon_rare = df[df["count"] < 50]
+# creation of a list
 taxon_list = taxon_rare.name.tolist()
-your_pokemon = random_nid(taxon_list)
+your_pokemon = ast.literal_eval(random_nid(taxon_list))[0][0]
 
 st.title("""
 Bienvenue, etudiant.e de la 4e promotion Master NID.
